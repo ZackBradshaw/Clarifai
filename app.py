@@ -1,12 +1,15 @@
 from langchain.llms import Clarifai
 import streamlit as st
 from langchain import PromptTemplate, LLMChain
+from agentmemory import create_memory, search_memory
 # Setup Clarifai with LangChain
 CLARIFAI_PAT = '906eb260478642778e943dff45f66f3e'
 USER_ID = 'meta'
 APP_ID = 'Llama-2'
 # Change these to whatever model and text URL you want to use
 MODEL_ID = 'llama2-7b-chat'
+
+memories = search_memory("conversation", "search term")
 
 template = """Question: {question}
 
@@ -44,11 +47,13 @@ for msg in st.session_state.messages:
 
 if user_prompt:
     st.session_state.messages.append({"role": "user", "content": user_prompt})
+    create_memory("conversation", user_prompt, metadata={"role": "user"})
 
     response = llm_chain.run(user_prompt)
 
     msg = {"role": "assistant", "content": response}
     st.session_state.messages.append(msg)
+    create_memory("conversation", response, metadata={"role": "assistant"})
 
     with st.chat_message("assistant"):
         st.write(msg["content"])
