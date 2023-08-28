@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_chat import message
 from llama import llama
 
 def clear_chat():
@@ -26,7 +25,7 @@ with st.form("chat_input", clear_on_submit=True):
 
 
 for msg in st.session_state.messages:
-    message(msg["content"], is_user=msg["role"] == "user")
+    st.chat_message(msg["content"], is_user=msg["role"] == "user")
 
 
 if user_prompt:
@@ -35,7 +34,7 @@ if user_prompt:
 
     st.session_state.messages.append({"role": "user", "content": user_prompt})
     
-    message(user_prompt, is_user=True)
+    st.chat_message(user_prompt, is_user=True)
 
     response = llama.get_response(user_prompt)  # get response from llama2 API (in our case from Workflow we created before)
 
@@ -47,7 +46,7 @@ if user_prompt:
 
     print('msg.content: ', msg["content"])
 
-    message(msg["content"])
+    st.chat_message(msg["content"])
 
 
 if len(st.session_state.messages) > 1:
