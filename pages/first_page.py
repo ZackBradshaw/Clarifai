@@ -1,6 +1,6 @@
 import streamlit as st
 from streamlit_chat import message
-from profit.llama import llama
+from llama import llama
 
 def clear_chat():
     st.session_state.messages = [{"role": "assistant", "content": "Say something to get started!"}]
