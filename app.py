@@ -1,5 +1,4 @@
 import streamlit as st
-from profit.main import ProfitPilot
 from clarifai_utils.modules.css import ClarifaiStreamlitCSS
 
 st.set_page_config(layout="wide")
