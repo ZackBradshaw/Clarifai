@@ -1,3 +1,4 @@
 clarifai==9.6.0
 streamlit
 langchain
+agentmemory
